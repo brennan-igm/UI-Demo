@@ -15,8 +15,12 @@ public class ScoreGenerator : MonoBehaviour
 
     public Image progressBar;
 
+    public Text buyButtonText;
+
     private float currentProgress = 0f;
     private float progressNeeded = 5f;
+
+    public Text generatorText;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +33,22 @@ public class ScoreGenerator : MonoBehaviour
     {
         currentProgress += Time.deltaTime * numOwned;
 
+        generatorText.text = "Generators: " + numOwned;
+        
+        int currentCost = GetCurrentCost();
+        buyButtonText.text = $"Buy Generator\nCost: {currentCost}";
+
+        // buyButton.interactable = manager.Score >= currentCost;
+        
+        if (manager.Score < currentCost)
+        {
+            buyButton.interactable = false;
+        }
+        else
+        {
+            buyButton.interactable = true;
+        }
+        
         if (currentProgress > progressNeeded)
         {
             manager.AddScore(numOwned);
@@ -41,7 +61,7 @@ public class ScoreGenerator : MonoBehaviour
     private void OnButtonClick()
     {
         int currentCost = GetCurrentCost();
-        if (manager.Score > currentCost)
+        if (manager.Score >= currentCost)
         {
             manager.SpendScore(currentCost);
             numOwned++;
@@ -50,6 +70,6 @@ public class ScoreGenerator : MonoBehaviour
 
     private int GetCurrentCost()
     {
-        return baseCost + (int)Mathf.Pow(numOwned, 5);
+        return baseCost + (int)Mathf.Pow(numOwned, 2);
     }
 }

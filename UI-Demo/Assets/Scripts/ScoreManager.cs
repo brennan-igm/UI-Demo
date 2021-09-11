@@ -8,6 +8,8 @@ public class ScoreManager : MonoBehaviour
     private int score;
 
     public int Score => score;
+
+    public Text scoreDisplay;
     
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,7 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scoreDisplay.text = $"Score\n{Score}";
     }
 
     public void AddScore(int amount)
